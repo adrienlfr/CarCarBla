@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
+import { JourneysPage } from '../journeys/journeys';
+import { ProfilPage } from '../profil/profil';
 import { HomePage } from '../home/home';
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -10,10 +11,14 @@ import { HomePage } from '../home/home';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
+  tab2Root = JourneysPage;
+  tab3Root = ProfilPage;
 
-  constructor() {
+  constructor(private auth: AuthService) {}
 
+
+  get authenticated(): boolean {
+    return this.auth.authenticated;
   }
+
 }
