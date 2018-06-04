@@ -7,6 +7,7 @@ import { AuthService } from "../../services/auth.service";
 import { LoginPage } from "../login/login";
 import { User } from "../../models/user";
 import {ProfileService} from "../../services/profile.service";
+import {CarsPage} from "../cars/cars";
 // import * as firebase from "firebase";
 // import {Camera, CameraOptions} from "@ionic-native/camera";
 
@@ -31,6 +32,7 @@ export class ProfilPage {
   }
 
   onClickCarsButton() {
+    this.navCtrl.push(CarsPage);
   }
 
   private loadProfile() {

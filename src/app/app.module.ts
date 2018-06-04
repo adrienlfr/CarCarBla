@@ -19,6 +19,7 @@ import { AuthService } from "../services/auth.service";
 import { GooglePlus } from "@ionic-native/google-plus";
 import {ProfileService} from "../services/profile.service";
 import {FirestoreService} from "../services/firestore.service";
+import {CarsPage} from "../pages/cars/cars";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {FirestoreService} from "../services/firestore.service";
     HomePage,
     TabsPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    CarsPage
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import {FirestoreService} from "../services/firestore.service";
     HomePage,
     TabsPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    CarsPage
   ],
   providers: [
     StatusBar,
