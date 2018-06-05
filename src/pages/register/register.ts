@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, Platform} from 'ionic-angular';
+import {NavController, Platform} from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { User } from "../../models/user";
 import {ProfileService} from "../../services/profile.service";
+import {TabsPage} from "../tabs/tabs";
 
 /**
  * Generated class for the RegisterPage page.
@@ -20,35 +21,20 @@ export class RegisterPage {
   user = {} as User;
   password: string;
 
-  constructor(private auth: AuthService, private srvProfile: ProfileService, public navCtrl: NavController, private platform: Platform, public navParams: NavParams) {
+  constructor(private auth: AuthService, private srvProfile: ProfileService,
+              public navCtrl: NavController, private platform: Platform) {
   }
 
   async register(user: User, password: string) {
     this.auth.signUp(user.email, password)
-      .then((result) => {
-        if (result != null) {
-          this.createProfile(result.user.uid);
-        }
-      })
+      .then(() => this.navCtrl.setRoot(TabsPage))
       .catch(error => console.error(error.message))
   }
 
   registerWithGoogle() {
     this.auth.signUpWithGoogle(this.platform)
-      .then((result) => {
-          if (result != null && result as User) {
-            this.user.username = result.displayName;
-            this.user.email = result.email;
-            this.user.photoUrl = result.photoURL;
-
-            this.createProfile(result.uid);
-          }
-      })
+      .then(() => this.navCtrl.setRoot(TabsPage))
       .catch((error) => console.log(error));
-}
-
-  private createProfile(userId: string) {
-    this.srvProfile.addUser(this.user, userId);
   }
 
   login() {
