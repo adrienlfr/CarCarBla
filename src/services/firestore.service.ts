@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import {User} from "../models/user";
 
 @Injectable()
 export class FirestoreService {
@@ -12,13 +11,11 @@ export class FirestoreService {
     this.db = firebase.firestore();
   }
 
-  getDocument(collection: string, docId: string): Promise<User> {
+  getDocument(collection: string, docId: string | null): Promise<any> {
     return new Promise((resolve, reject) => {
       this.db.collection(collection).doc(docId).get()
         .then((querySnapshot) => resolve(querySnapshot.data()))
-        .catch((error: any) => {
-          reject(error);
-        });
+        .catch((error: any) => reject(error));
     });
   }
 
@@ -30,7 +27,6 @@ export class FirestoreService {
           querySnapshot.forEach(function (doc) {
             let obj = JSON.parse(JSON.stringify(doc.data()));
             obj.$key = doc.id;
-            console.log(obj);
             arr.push(obj);
           });
           if (arr.length > 0) {
@@ -41,45 +37,31 @@ export class FirestoreService {
             resolve(null);
           }
         })
-        .catch((error: any) => {
-          reject(error);
-        });
+        .catch((error: any) => reject(error));
     });
   }
 
   deleteDocument(collectionName: string, docID: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.db.collection(collectionName).doc(docID).delete()
-        .then((obj: any) => {
-          resolve(obj);
-        })
-        .catch((error: any) => {
-          reject(error);
-        });
+        .then((obj: any) => resolve(obj))
+        .catch((error: any) => reject(error));
     });
   }
 
   addDocument(collectionName: string, docId: string, dataObj: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.db.collection(collectionName).doc(docId).set(dataObj)
-        .then((obj: any) => {
-          resolve(obj);
-        })
-        .catch((error: any) => {
-          reject(error);
-        });
+        .then((obj: any) => resolve(obj))
+        .catch((error: any) => reject(error));
     });
   }
 
   updateDocument(collectionName: string, docID: string, dataObj: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.db.collection(collectionName).doc(docID).update(dataObj)
-        .then((obj: any) => {
-          resolve(obj);
-        })
-        .catch((error: any) => {
-          reject(error);
-        });
+        .then((obj: any) => resolve(obj))
+        .catch((error: any) => reject(error));
     });
   }
 }

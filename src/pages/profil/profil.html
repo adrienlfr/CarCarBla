@@ -3,6 +3,11 @@
     <ion-title>
       Mon profil
     </ion-title>
+    <ion-buttons end *ngIf="isChanged">
+      <button ion-button (click)="saveProfile()">
+        Sauvegarder
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -18,17 +23,17 @@
 
     <ion-item>
       <ion-label color="primary">Nom utilisateur</ion-label>
-      <ion-input id="username" placeholder="Saisir votre nom d'utilisateur" (change)="updateProfile()" [(ngModel)]="user.username"></ion-input>
+      <ion-input id="username" placeholder="Saisir votre nom d'utilisateur" [(ngModel)]="user.username"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label color="primary">Prenom</ion-label>
-      <ion-input id="firstname" placeholder="Saisir votre nom" (change)="updateProfile()" [(ngModel)]="user.firstname"></ion-input>
+      <ion-input id="firstname" placeholder="Saisir votre nom" [(ngModel)]="user.firstname"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label color="primary">Nom</ion-label>
-      <ion-input id="lastname" placeholder="Saisir votre prenom" (change)="updateProfile()" [(ngModel)]="user.lastname"></ion-input>
+      <ion-input id="lastname" placeholder="Saisir votre prenom" [(ngModel)]="user.lastname"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -36,12 +41,12 @@
       <ion-input readonly [(ngModel)]="user.email"></ion-input>
     </ion-item>
 
-    <button ion-item (click)="onClickCarsButton()">
+    <button *ngIf="!isInitProfile" ion-item (click)="onClickCarsButton()">
       <ion-icon name="car" item-start color="primary"></ion-icon>
       Mes voitures
     </button>
 
-    <ion-item>
+    <ion-item *ngIf="!isInitProfile">
       <button ion-button item-end (click)="logout()">Déconnexion</button>
     </ion-item>
   </ion-list>

@@ -39,8 +39,17 @@ export class AuthService {
     return this.user != null;
   }
 
-  uid(): string {
+  get uid(): string {
     return this.user && this.user.uid;
+  }
+  get email(): string {
+    return this.user && this.user.email;
+  }
+  get displayName(): string {
+    return this.user && this.user.displayName;
+  }
+  get photoURL(): string {
+    return this.user && this.user.photoURL;
   }
 
   updateProfile(profile: {displayName: string | null, photoURL: string | null}) {

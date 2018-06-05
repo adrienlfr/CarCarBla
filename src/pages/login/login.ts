@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, Platform} from 'ionic-angular';
+import {NavController, NavParams, Platform} from 'ionic-angular';
 
 import { AuthService } from "../../services/auth.service";
 
@@ -23,6 +23,7 @@ export class LoginPage {
   user = {} as ConnectionUser;
 
   constructor(private auth: AuthService, public navCtrl: NavController, private platform: Platform) {
+
   }
 
   async login(user: ConnectionUser) {

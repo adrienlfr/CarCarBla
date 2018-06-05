@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, NavController} from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { AuthService } from "../../services/auth.service";
 // import { storage, initializeApp } from 'firebase';
@@ -8,6 +8,7 @@ import { LoginPage } from "../login/login";
 import { User } from "../../models/user";
 import {ProfileService} from "../../services/profile.service";
 import {CarsPage} from "../cars/cars";
+import {TabsPage} from "../tabs/tabs";
 // import * as firebase from "firebase";
 // import {Camera, CameraOptions} from "@ionic-native/camera";
 
@@ -18,17 +19,22 @@ import {CarsPage} from "../cars/cars";
 export class ProfilPage {
 
   user = {} as User;
+  isInitProfile: boolean = false;
+  isChanged: boolean = false;
 
-  constructor(private auth: AuthService, private profileSrv: ProfileService, public navCtrl: NavController, private alertCtrl: AlertController) {}
-
-  ionViewDidLoad() {
-    this.checkPhotoURL();
-    this.loadProfile();
+  constructor(private auth: AuthService, private profileSrv: ProfileService, public navCtrl: NavController, public navParams: NavParams) {
+    if (this.navParams.get('isInitProfile')) {
+      this.isInitProfile = true;
+      this.isChanged = true;
+      this.loadProfile();
+    } else {
+      this.user = TabsPage.user;
+    }
   }
 
   logout(){
-    this.auth.signOut();
-    this.navCtrl.setRoot(LoginPage);
+    this.auth.signOut()
+      .then(() => this.navCtrl.setRoot(LoginPage));
   }
 
   onClickCarsButton() {
@@ -36,29 +42,27 @@ export class ProfilPage {
   }
 
   private loadProfile() {
-    this.profileSrv.getUser(this.auth.uid())
-      .then((result) => {
-        this.user = result;
-        this.checkPhotoURL();
-      })
-      .catch(() => {
-        let alert = this.alertCtrl.create({
-          title: 'Erreur',
-          message: 'Impossible de charge le profile de l\'utilisateur.',
-          buttons: ['Ok']
-        });
-        alert.present();
-      });
-  }
-
-  private checkPhotoURL() {
-    if ( this.user.photoUrl == null ) {
+    this.user.email = this.auth.email;
+    this.user.username = this.auth.displayName;
+    if ( this.auth.photoURL != null ) {
+      this.user.photoUrl = this.auth.photoURL;
+    } else {
       this.user.photoUrl = 'assets/imgs/default_avatar.png';
     }
   }
 
-  updateProfile() : void {
-    this.profileSrv.updateUser(this.auth.uid(), this.user);
+  saveProfile() : void {
+    if ( this.isInitProfile ) {
+      this.profileSrv.addUser(this.auth.uid, this.user)
+        .then(() => {
+          this.isChanged = false;
+          this.isInitProfile = false;
+          this.navCtrl.setRoot(TabsPage)
+        })
+        .catch((e) => console.error(e));
+    } else {
+      this.profileSrv.updateUser(this.auth.uid, this.user);
+    }
   }
 
   /*async takePhoto() {

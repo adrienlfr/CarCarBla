@@ -21,10 +21,14 @@ export class CarsPage {
   }
 
   ionViewDidLoad() {
-    this.tabBarElement.style.display = 'none';
+    if (this.tabBarElement != null) {
+      this.tabBarElement.style.display = 'none';
+    }
   }
   ionViewWillLeave() {
-    this.tabBarElement.style.display = 'flex';
+    if (this.tabBarElement != null) {
+      this.tabBarElement.style.display = 'flex';
+    }
   }
 
 }

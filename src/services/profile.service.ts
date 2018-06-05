@@ -24,7 +24,7 @@ export class ProfileService {
     });
   }
 
-  addUser(user: User, userId: string): Promise<User> {
+  addUser(userId: string, user: User): Promise<User> {
     return new Promise((resolve, reject) => {
       this.firestoreSrv.addDocument(USER_PATH, userId, user)
         .then((result) => resolve(result))
