@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {NavController, Platform} from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { User } from "../../models/user";
-import {ProfileService} from "../../services/profile.service";
 import {TabsPage} from "../tabs/tabs";
 
 /**
@@ -21,8 +20,7 @@ export class RegisterPage {
   user = {} as User;
   password: string;
 
-  constructor(private auth: AuthService, private srvProfile: ProfileService,
-              public navCtrl: NavController, private platform: Platform) {
+  constructor(private auth: AuthService, public navCtrl: NavController, private platform: Platform) {
   }
 
   async register(user: User, password: string) {
