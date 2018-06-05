@@ -48,7 +48,7 @@ export class RegisterPage {
 }
 
   private createProfile(userId: string) {
-    this.srvProfile.addUser(this.user, userId);
+    this.srvProfile.addUser(userId, this.user);
   }
 
   login() {
