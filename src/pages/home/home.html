@@ -6,13 +6,25 @@
 
 <ion-content padding class="backgroundImage">
 
-  <ion-label id="mainLabel">Le covoiturage pour tous</ion-label>
-  <button id="addJourneyButton" ion-button block [color]="dark">Proposer un trajet</button>
+  <ion-grid>
 
-  <button id="searchJourneyButton" ion-button block [navPush]="searchJourneyPage" >Rechercher un trajet</button>
+    <ion-row class="rowLabel">
+      <ion-label class="mainLabel">Le covoiturage pour tous</ion-label>
+    </ion-row>
+
+    <ion-row class="rowButton">
+      <ion-col>
+        <ion-row>
+          <button class="buttonHome" ion-button block [navPush]="journeyPage">Proposer un trajet</button>
+        </ion-row>
+
+        <ion-row>
+          <button class="buttonHome" ion-button block [navPush]="searchJourneyPage" >Rechercher un trajet</button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
 
 
-
-  <button ion-button full [navPush]="journeyPage" >Ajouter un trajet</button>
+  </ion-grid>
 
 </ion-content>

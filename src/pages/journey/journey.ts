@@ -23,19 +23,13 @@ export class JourneyPage {
   date: string;
   hour: string;
 
-  constructor(private auth: AuthService, public navCtrl: NavController, private firestore: FirestoreService, private alertCtrl: AlertController) {
-    console.log(auth.user);
+  constructor(public navCtrl: NavController, private firestore: FirestoreService, private alertCtrl: AlertController) {
     this.date = new Date().toISOString();
     this.hour = new Date().toISOString();
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad JourneyPage');
+    this.journey.passengerNb = 1;
   }
 
   saveJourney() {
-
-
     this.setJourneyDate();
     this.firestore.addDocument(JOURNEY_PATH, this.journey)
       .then(() => this.navCtrl.pop())

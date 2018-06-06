@@ -19,40 +19,50 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <ion-list>
+  <ion-grid padding-right>
 
-    <ion-item>
-      <ion-label color="primary">Départ</ion-label>
-      <ion-input id="departure" type="text" placeholder="Saisir la ville de départ" [(ngModel)]="journey.departure"></ion-input>
-    </ion-item>
+    <ion-row>
+        <ion-item>
+          <ion-label color="primary">Départ</ion-label>
+          <ion-input id="departure" type="text" placeholder="Saisir la ville de départ" [(ngModel)]="journey.departure"></ion-input>
+        </ion-item>
+    </ion-row>
 
-    <ion-item>
-      <ion-label color="primary">Arriver</ion-label>
-      <ion-input id="arrival" type="text" placeholder="Saisir la ville d'arriver" [(ngModel)]="journey.arrival"></ion-input>
-    </ion-item>
+    <ion-row>
+      <ion-item>
+        <ion-label color="primary">Arriver</ion-label>
+        <ion-input id="arrival" type="text" placeholder="Saisir la ville d'arriver" [(ngModel)]="journey.arrival"></ion-input>
+      </ion-item>
+    </ion-row>
 
-    <ion-item>
-      <ion-label color="primary">Date</ion-label>
-      <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="date"></ion-datetime>
-    </ion-item>
+    <ion-row>
+      <ion-item>
+        <ion-label color="primary">Date</ion-label>
+        <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="date"></ion-datetime>
+      </ion-item>
+    </ion-row>
 
-    <ion-item>
-      <ion-label color="primary">Heure</ion-label>
-      <ion-datetime displayFormat="HH:mm" [(ngModel)]="hour"></ion-datetime>
-    </ion-item>
+    <ion-row>
+      <ion-item>
+        <ion-label color="primary">Heure</ion-label>
+        <ion-datetime displayFormat="HH:mm" [(ngModel)]="hour"></ion-datetime>
+      </ion-item>
+    </ion-row>
 
-    <ion-item>
-      <ion-label color="primary">Nombre de place</ion-label>
-      <ion-input id="passengerNb" type="number" min="1" placeholder="Saisir le nombre de place disponible" [(ngModel)]="journey.passengerNb"></ion-input>
-    </ion-item>
+    <ion-row>
+      <ion-item>
+        <ion-label color="primary" full>
+          Nombre de place :
+          <ion-badge item-end color="primary"> {{journey.passengerNb}} </ion-badge>
+        </ion-label>
+        <ion-range min="1" max="4" step="1" snaps="true" color="primary" [(ngModel)]="journey.passengerNb"></ion-range>
+      </ion-item>
+    </ion-row>
 
-    <button ion-item (click)="onClick()">
-      <ion-icon name="car" item-start color="primary"></ion-icon>
-      Mes voitures
-    </button>
 
-  </ion-list>
+
+  </ion-grid>
 
 </ion-content>
