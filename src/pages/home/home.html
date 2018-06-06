@@ -6,6 +6,11 @@
 
 <ion-content padding class="backgroundImage">
 
-  <ion-label>La simplicité avant tout</ion-label>
+  <ion-label id="mainLabel">Le covoiturage pour tous</ion-label>
+  <button id="addJourneyButton" ion-button block [color]="dark">Proposer un trajet</button>
+
+  <button id="searchJourneyButton" ion-button block [navPush]="searchJourneyPage" >Rechercher un trajet</button>
+
+
 
 </ion-content>

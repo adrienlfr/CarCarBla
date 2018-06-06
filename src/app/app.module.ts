@@ -20,6 +20,7 @@ import { GooglePlus } from "@ionic-native/google-plus";
 import {ProfileService} from "../services/profile.service";
 import {FirestoreService} from "../services/firestore.service";
 import {CarsPage} from "../pages/cars/cars";
+import {SearchJourneyPage} from "../pages/search-journey/search-journey";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {CarsPage} from "../pages/cars/cars";
     TabsPage,
     LoginPage,
     RegisterPage,
-    CarsPage
+    CarsPage,
+    SearchJourneyPage
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,8 @@ import {CarsPage} from "../pages/cars/cars";
     TabsPage,
     LoginPage,
     RegisterPage,
-    CarsPage
+    CarsPage,
+    SearchJourneyPage
   ],
   providers: [
     StatusBar,

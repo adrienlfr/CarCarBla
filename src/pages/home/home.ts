@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import {SearchJourneyPage} from "../search-journey/search-journey";
 
 @Component({
   selector: 'page-home',
@@ -7,8 +8,10 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  searchJourneyPage: any;
 
+  constructor(public navCtrl: NavController) {
+    this.searchJourneyPage = SearchJourneyPage;
   }
 
 }

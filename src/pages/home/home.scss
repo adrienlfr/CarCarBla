@@ -1,3 +1,38 @@
 page-home {
 
+  #addJourneyButton {
+    position: relative;
+    width:200px;
+    margin:auto;
+    margin-top:60%;
+    opacity: 0.7;
+    background-color:#222222;
+  }
+
+  #searchJourneyButton {
+    position: relative;
+    width:200px;
+    margin:auto;
+    margin-top:5%;
+    opacity: 0.7;
+    background-color:#222222;
+  }
+
+  #mainLabel {
+    font-size: x-large;
+    position: center;
+    margin-left: 3%;
+    margin-top: 50%;
+    font-family: Jokerman;
+    color: #f4f4f4;
+  }
+
+  .backgroundImage{
+    background-image: url("../../assets/imgs/background.jpg");
+    background-size: cover;
+  }
+
+  .appLogo {
+
+  }
 }
