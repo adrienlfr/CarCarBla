@@ -1,0 +1,58 @@
+<!--
+  Generated template for the JourneyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Ajouter un trajet</ion-title>
+
+    <ion-buttons end>
+      <button ion-button (click)="saveJourney()">
+        Valider
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label color="primary">Départ</ion-label>
+      <ion-input id="departure" type="text" placeholder="Saisir la ville de départ" [(ngModel)]="journey.departure"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Arriver</ion-label>
+      <ion-input id="arrival" type="text" placeholder="Saisir la ville d'arriver" [(ngModel)]="journey.arrival"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Date</ion-label>
+      <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="date"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Heure</ion-label>
+      <ion-datetime displayFormat="HH:mm" [(ngModel)]="hour"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Nombre de place</ion-label>
+      <ion-input id="passengerNb" type="number" min="1" placeholder="Saisir le nombre de place disponible" [(ngModel)]="journey.passengerNb"></ion-input>
+    </ion-item>
+
+    <button ion-item (click)="onClick()">
+      <ion-icon name="car" item-start color="primary"></ion-icon>
+      Mes voitures
+    </button>
+
+  </ion-list>
+
+</ion-content>

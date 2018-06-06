@@ -49,9 +49,17 @@ export class FirestoreService {
     });
   }
 
-  addDocument(collectionName: string, docId: string | null, dataObj: any): Promise<any> {
+  setDocument(collectionName: string, docId: string, dataObj: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.db.collection(collectionName).doc(docId).set(dataObj)
+        .then((obj: any) => resolve(obj))
+        .catch((error: any) => reject(error));
+    });
+  }
+
+  addDocument(collectionName: string, dataObj: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.db.collection(collectionName).add(dataObj)
         .then((obj: any) => resolve(obj))
         .catch((error: any) => reject(error));
     });

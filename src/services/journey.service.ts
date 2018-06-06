@@ -8,41 +8,41 @@ export class JourneyService {
 
   constructor(private firestoreSrv: FirestoreService) {}
 
-  getJourney(collection: string, firstId: string, journeyId: string): Promise<Journey> {
+  getJourney(journeyId: string): Promise<Journey> {
     return new Promise<any>((resolve, reject) => {
-      this.firestoreSrv.getSecondDocument(collection, firstId, JOURNEY_PATH, journeyId)
+      this.firestoreSrv.getDocument(JOURNEY_PATH, journeyId)
         .then((result) => resolve(result))
         .catch((error) => reject(error))
     });
   }
 
-  getAllJourneys(collection: string, firstId: string): Promise<any> {
+  getAllJourneys(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.firestoreSrv.getAllSecondDocuments(collection, firstId, JOURNEY_PATH)
+      this.firestoreSrv.getAllDocuments(JOURNEY_PATH)
         .then((result) => resolve(result))
         .catch((error) => reject(error))
     });
   }
 
-  addJourney(firstCollection: string, firstId: string, journey: Journey): Promise<Journey> {
+  addJourney(journey: Journey): Promise<Journey> {
     return new Promise((resolve, reject) => {
-      this.firestoreSrv.addSecondDocument(firstCollection, firstId, JOURNEY_PATH, journey)
+      this.firestoreSrv.addDocument(JOURNEY_PATH, journey)
         .then((result) => resolve(result))
         .catch((error) => reject(error));
     });
   }
 
-  updateJourney(firstCollection: string, firstId: string, journeyId: string, journey: Journey): Promise<Journey> {
+  updateJourney(journeyId: string, journey: Journey): Promise<Journey> {
     return new Promise((resolve, reject) => {
-      this.firestoreSrv.updateSecondDocument(firstCollection, JOURNEY_PATH, firstId, journeyId, journey)
+      this.firestoreSrv.updateDocument(JOURNEY_PATH, journeyId, journey)
         .then((result) => resolve(result))
         .catch((error) => reject(error));
     });
   }
 
-  deleteJourney(firstCollection: string, firstId: string, secondId: string): Promise<any> {
+  deleteJourney(journeyId: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.firestoreSrv.deleteSecondDocument(firstCollection, firstId, JOURNEY_PATH, secondId)
+      this.firestoreSrv.deleteDocument(JOURNEY_PATH, journeyId)
         .then((result) => resolve(result))
         .catch((error) => reject(error));
     });

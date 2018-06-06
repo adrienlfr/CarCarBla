@@ -21,6 +21,7 @@ import {ProfileService} from "../services/profile.service";
 import {FirestoreService} from "../services/firestore.service";
 import {CarsPage} from "../pages/cars/cars";
 import {SearchJourneyPage} from "../pages/search-journey/search-journey";
+import {JourneyPage} from "../pages/journey/journey";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {SearchJourneyPage} from "../pages/search-journey/search-journey";
     LoginPage,
     RegisterPage,
     CarsPage,
-    SearchJourneyPage
+    SearchJourneyPage,
+    JourneyPage
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,8 @@ import {SearchJourneyPage} from "../pages/search-journey/search-journey";
     LoginPage,
     RegisterPage,
     CarsPage,
-    SearchJourneyPage
+    SearchJourneyPage,
+    JourneyPage
   ],
   providers: [
     StatusBar,

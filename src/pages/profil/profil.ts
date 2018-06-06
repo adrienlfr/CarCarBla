@@ -9,6 +9,7 @@ import { User } from "../../models/user";
 import {ProfileService} from "../../services/profile.service";
 import {CarsPage} from "../cars/cars";
 import {TabsPage} from "../tabs/tabs";
+import {FirestoreService} from "../../services/firestore.service";
 // import * as firebase from "firebase";
 // import {Camera, CameraOptions} from "@ionic-native/camera";
 
@@ -22,7 +23,7 @@ export class ProfilPage {
   isInitProfile: boolean = false;
   isChanged: boolean = false;
 
-  constructor(private auth: AuthService, private profileSrv: ProfileService, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private auth: AuthService,private fires: FirestoreService, private profileSrv: ProfileService, public navCtrl: NavController, public navParams: NavParams) {
     if (this.navParams.get('isInitProfile')) {
       this.isInitProfile = true;
       this.isChanged = true;
@@ -53,13 +54,14 @@ export class ProfilPage {
 
   saveProfile() : void {
     if ( this.isInitProfile ) {
-      this.profileSrv.addUser(this.auth.uid, this.user)
+      this.fires.addDocument("Test", {name: 'Adrien', value: 'test'});
+      /*this.profileSrv.addUser(this.auth.uid, this.user)
         .then(() => {
           this.isChanged = false;
           this.isInitProfile = false;
           this.navCtrl.setRoot(TabsPage)
         })
-        .catch((e) => console.error(e));
+        .catch((e) => console.error(e));*/
     } else {
       this.profileSrv.updateUser(this.auth.uid, this.user);
     }

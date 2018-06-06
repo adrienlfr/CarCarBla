@@ -8,7 +8,7 @@ import {User} from "firebase";
 
 @Injectable()
 export class AuthService {
-  private user: firebase.User;
+  user: firebase.User;
 
   constructor(public afAuth: AngularFireAuth, private gplus: GooglePlus) {
     afAuth.authState.subscribe(user => {
