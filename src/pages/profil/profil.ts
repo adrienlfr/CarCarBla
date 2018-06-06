@@ -48,7 +48,10 @@ export class ProfilPage {
 
   logout(){
     this.auth.signOut()
-      .then(() => this.navCtrl.setRoot(LoginPage));
+      .then(() => {
+        TabsPage.user = {} as User;
+        this.navCtrl.setRoot(LoginPage)
+      });
   }
 
   onClickCarsButton() {
@@ -114,7 +117,7 @@ export class ProfilPage {
           }
         },
         {
-          text: 'Cancel',
+          text: 'Annuler',
           role: 'cancel'
         }
       ]
