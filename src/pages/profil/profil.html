@@ -17,7 +17,7 @@
 
     <ion-item>
       <ion-avatar>
-        <img id="image" class="item-avatar" [src]="user.photoUrl" />
+        <img id="image" class="item-avatar" (click)="presentActionSheetPicture()" [src]="user.photoUrl" />
       </ion-avatar>
     </ion-item>
 

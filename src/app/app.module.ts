@@ -22,6 +22,7 @@ import {FirestoreService} from "../services/firestore.service";
 import {CarsPage} from "../pages/cars/cars";
 import {SearchJourneyPage} from "../pages/search-journey/search-journey";
 import {JourneyPage} from "../pages/journey/journey";
+import { Camera } from "@ionic-native/camera";
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import {JourneyPage} from "../pages/journey/journey";
     FirestoreService,
     AngularFireAuth,
     GooglePlus,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

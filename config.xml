@@ -84,5 +84,7 @@
     <plugin name="cordova-plugin-googleplus" spec="^5.3.0">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.865446848271-f4pdcffqg5f6bmq7k8o5o5u1p0ojqe9t" />
     </plugin>
-    <engine name="android" spec="~7.0.0" />
+    <plugin name="cordova-plugin-camera" spec="^4.0.3" />
+    <engine name="android" spec="7.0.0" />
+    <engine name="ios" spec="4.5.4" />
 </widget>
