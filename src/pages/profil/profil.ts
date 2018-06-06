@@ -90,7 +90,9 @@ export class ProfilPage {
       pictures.putString(image, 'data_url').then(() => {
         pictures.getDownloadURL().then((url) => {
           this.user.photoUrl = url;
-          this.saveProfile();
+          if ( !this.isInitProfile ) {
+            this.saveProfile();
+          }
         })
       });
     } catch (e) {
