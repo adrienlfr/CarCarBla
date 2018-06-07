@@ -8,12 +8,12 @@ import { JourneyPage } from "../journey/journey";
 })
 export class HomePage {
 
-
   constructor(public navCtrl: NavController) {}
 
   searchJourney(){
     this.navCtrl.push(JourneyPage, {isSearch: true});
   }
+
   addJourney(){
     this.navCtrl.push(JourneyPage, {isSearch: false});
   }

@@ -30,7 +30,6 @@ export class FirestoreService {
             arr.push(obj);
           });
           if (arr.length > 0) {
-            console.log("Document data:", arr);
             resolve(arr);
           } else {
             console.log("No such document!");

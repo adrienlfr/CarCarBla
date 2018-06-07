@@ -7,10 +7,11 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Ajouter un trajet</ion-title>
+    <ion-title *ngIf="!isSearch">Proposer</ion-title>
+    <ion-title *ngIf="isSearch">Rechercher</ion-title>
 
     <ion-buttons end>
-      <button ion-button (click)="saveJourney()">
+      <button ion-button (click)="searchOrAddJourney()">
         Valider
       </button>
     </ion-buttons>
@@ -47,7 +48,7 @@
     <ion-row>
       <ion-item>
         <ion-label color="primary">Heure</ion-label>
-        <ion-datetime displayFormat="HH:mm" [(ngModel)]="hour"></ion-datetime>
+        <ion-datetime displayFormat="HH:mm" [(ngModel)]="date"></ion-datetime>
       </ion-item>
     </ion-row>
 

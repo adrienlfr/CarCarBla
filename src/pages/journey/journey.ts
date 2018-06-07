@@ -4,7 +4,8 @@ import {Journey, JOURNEY_PATH} from "../../models/journey";
 import * as firebase from "firebase";
 import Timestamp = firebase.firestore.Timestamp;
 import {FirestoreService} from "../../services/firestore.service";
-import {AuthService} from "../../services/auth.service";
+import moment from 'moment';
+import {TabsPage} from "../tabs/tabs";
 
 /**
  * Generated class for the JourneyPage page.
@@ -21,28 +22,25 @@ export class JourneyPage {
 
   journey = {} as Journey;
   date: string;
-  hour: string;
   isSearch: boolean;
-  allJourneys: Journey[];
 
-  constructor(public navCtrl: NavController, private firestore: FirestoreService, private alertCtrl: AlertController, public navParams: NavParams) {
-    this.date = new Date().toISOString();
-    this.hour = new Date().toISOString();
+  constructor(public navCtrl: NavController, private firestore: FirestoreService,
+              private alertCtrl: AlertController, public navParams: NavParams) {
+    this.date = moment().format();
     this.journey.passengerNb = 1;
     this.isSearch = this.navParams.get("isSearch");
-    if (this.isSearch){
-      this.firestore.getAllDocuments(JOURNEY_PATH)
-        .then((result) => this.allJourneys = result)
-        .catch((e) => console.error(e));
-    }
   }
 
   searchOrAddJourney() {
     this.setJourneyDate();
     if(this.isSearch){
-      let date = new Date(this.date);
-      let hour = new Date(this.hour);
-      let result = this.allJourneys.filter(j => j.departure == this.journey.departure && j.arrival == this.journey.arrival && j.date > this.journey.date && j.date < (Timestamp) date.getDate())
+      let result = TabsPage.journeys.filter(j =>
+        j.departure == this.journey.departure &&
+        j.arrival == this.journey.arrival &&
+        moment(j.date).isAfter(moment(this.journey.date.toMillis())) &&
+        moment(j.date).isBefore(moment(this.journey.date.toMillis() + 86400000)) );
+
+      console.log(result);
 
     } else {
       this.firestore.addDocument(JOURNEY_PATH, this.journey)
@@ -57,14 +55,9 @@ export class JourneyPage {
           alert.present();
         })
     }
-
   }
 
   private setJourneyDate() {
-    let d = new Date(this.date);
-    let h = new Date(this.hour);
-    let date = new Date(d.getFullYear(), d.getMonth(), d.getDay(), h.getHours(), h.getMinutes());
-    this.journey.date = Timestamp.fromDate(date);
+    this.journey.date = Timestamp.fromMillis(parseInt(moment(this.date).format('x'), 10));
   }
-
 }

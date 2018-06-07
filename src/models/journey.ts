@@ -6,6 +6,7 @@ export interface Journey {
   date: Timestamp;
   departure: string;
   passengerNb: number;
+  nbPlacesAvailable: number;
   price: number;
 }
 

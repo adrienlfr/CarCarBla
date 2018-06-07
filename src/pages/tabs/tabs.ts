@@ -4,9 +4,10 @@ import { JourneysPage } from '../journeys/journeys';
 import { ProfilPage } from '../profil/profil';
 import { HomePage } from '../home/home';
 import { AuthService } from "../../services/auth.service";
-import {User} from "../../models/user";
-import {ProfileService} from "../../services/profile.service";
+import {User, USER_PATH} from "../../models/user";
 import {AlertController, NavController} from "ionic-angular";
+import {Journey, JOURNEY_PATH} from "../../models/journey";
+import {FirestoreService} from "../../services/firestore.service";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -14,13 +15,15 @@ import {AlertController, NavController} from "ionic-angular";
 export class TabsPage {
 
   static user = {} as User;
+  static journeys: Journey[];
 
   tab1Root = HomePage;
   tab2Root = JourneysPage;
   tab3Root = ProfilPage;
 
-  constructor(private auth: AuthService, public navCtrl: NavController, private profileSrv: ProfileService, private alertCtrl: AlertController) {
+  constructor(private auth: AuthService, public navCtrl: NavController, private firebase: FirestoreService, private alertCtrl: AlertController) {
     this.loadProfile();
+    this.loadJourneys();
   }
 
 
@@ -29,7 +32,7 @@ export class TabsPage {
   }
 
   private loadProfile() {
-    this.profileSrv.getUser(this.auth.uid)
+    this.firebase.getDocument(USER_PATH, this.auth.uid)
       .then((result) => {
         if (result == null) {
           this.navCtrl.setRoot(ProfilPage, { isInitProfile: true });
@@ -45,6 +48,12 @@ export class TabsPage {
         });
         alert.present();
       });
+  }
+
+  private loadJourneys() {
+    this.firebase.getAllDocuments(JOURNEY_PATH)
+      .then((result) => TabsPage.journeys = result)
+      .catch((e) => console.error(e));
   }
 
 }
