@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import {Journey} from "../../models/journey";
+import * as firebase from "firebase";
+import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
   selector: 'page-journeys',
@@ -7,8 +10,15 @@ import { NavController } from 'ionic-angular';
 })
 export class JourneysPage {
 
-  constructor(public navCtrl: NavController) {
+  tab: Journey[];
 
+
+  constructor(public navCtrl: NavController) {
+    this.tab = [
+      {arrival: 'Clermont-Ferrand', date: Timestamp.fromDate(new Date()), departure: "Rodez", passengerNb: 3},
+      {arrival: 'Loin', date: Timestamp.fromDate(new Date()), departure: "Putier-Sur-Marne", passengerNb: 2},
+      {arrival: 'Oui', date: Timestamp.fromDate(new Date()), departure: "Poop", passengerNb: 2}
+    ]
   }
 
 }

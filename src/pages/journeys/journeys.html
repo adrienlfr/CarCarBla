@@ -9,16 +9,20 @@
 <ion-content>
 
   <ion-list>
-    <ion-card>
+
+    <ion-card *ngFor="let item of tab">
       <ion-item>
         <ion-grid>
-          <ion-label>Jean Cloud</ion-label>
-          <ion-avatar>
-            <img src="assets/imgs/default_avatar.png"  />
-          </ion-avatar>
+          <ion-row>
+            <ion-col>{{item.arrival}}</ion-col>
+            <ion-col>{{item.departure}}</ion-col>
+            <ion-col>{{item.passengerNb}}</ion-col>
+            <ion-col>{{item.date}}</ion-col>
+          </ion-row>
         </ion-grid>
       </ion-item>
     </ion-card>
+
   </ion-list>
 
 </ion-content>
