@@ -32,16 +32,21 @@ export class JourneyPage {
   }
 
   searchOrAddJourney() {
-    this.setJourneyDate();
+    console.log();
+    this.setJourney();
     if(this.isSearch){
-      let result = TabsPage.journeys.filter(j =>
-        j.departure == this.journey.departure &&
-        j.arrival == this.journey.arrival &&
-        moment(j.date).isAfter(moment(this.journey.date.toMillis())) &&
-        moment(j.date).isBefore(moment(this.journey.date.toMillis() + 86400000)) );
-
-      console.log(result);
-
+      this.firestore.getAllDocuments(JOURNEY_PATH)
+        .then((journeys) => {
+          if (journeys != null) {
+            let result = journeys.filter(j =>
+              j.departure == this.journey.departure &&
+              j.arrival == this.journey.arrival &&
+              moment(j.date).isSameOrAfter(moment(this.journey.date.toMillis())) &&
+              moment(j.date).isSameOrBefore(moment(this.journey.date.toMillis() + 86400000)));
+            console.log(result);
+          }
+        })
+        .catch((e) => console.error(e));
     } else {
       this.firestore.addDocument(JOURNEY_PATH, this.journey)
         .then(() => this.navCtrl.pop())
@@ -57,7 +62,13 @@ export class JourneyPage {
     }
   }
 
-  private setJourneyDate() {
+  private async getAllJourney() {
+
+  }
+
+  private setJourney() {
     this.journey.date = Timestamp.fromMillis(parseInt(moment(this.date).format('x'), 10));
+    this.journey.driver = TabsPage.userId;
+    this.journey.nbPlacesAvailable = this.journey.passengerNb;
   }
 }

@@ -20,7 +20,6 @@ import { GooglePlus } from "@ionic-native/google-plus";
 import {ProfileService} from "../services/profile.service";
 import {FirestoreService} from "../services/firestore.service";
 import {CarsPage} from "../pages/cars/cars";
-import {SearchJourneyPage} from "../pages/search-journey/search-journey";
 import {JourneyPage} from "../pages/journey/journey";
 import { Camera } from "@ionic-native/camera";
 
@@ -34,7 +33,6 @@ import { Camera } from "@ionic-native/camera";
     LoginPage,
     RegisterPage,
     CarsPage,
-    SearchJourneyPage,
     JourneyPage
   ],
   imports: [
@@ -53,7 +51,6 @@ import { Camera } from "@ionic-native/camera";
     LoginPage,
     RegisterPage,
     CarsPage,
-    SearchJourneyPage,
     JourneyPage
   ],
   providers: [

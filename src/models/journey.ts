@@ -8,6 +8,7 @@ export interface Journey {
   passengerNb: number;
   nbPlacesAvailable: number;
   price: number;
+  driver: string;
 }
 
 export const JOURNEY_PATH = 'Journeys';

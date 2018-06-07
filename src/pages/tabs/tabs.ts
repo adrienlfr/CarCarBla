@@ -15,7 +15,7 @@ import {FirestoreService} from "../../services/firestore.service";
 export class TabsPage {
 
   static user = {} as User;
-  static journeys: Journey[];
+  static userId: string;
 
   tab1Root = HomePage;
   tab2Root = JourneysPage;
@@ -23,7 +23,7 @@ export class TabsPage {
 
   constructor(private auth: AuthService, public navCtrl: NavController, private firebase: FirestoreService, private alertCtrl: AlertController) {
     this.loadProfile();
-    this.loadJourneys();
+    TabsPage.userId = this.auth.uid;
   }
 
 
@@ -48,12 +48,6 @@ export class TabsPage {
         });
         alert.present();
       });
-  }
-
-  private loadJourneys() {
-    this.firebase.getAllDocuments(JOURNEY_PATH)
-      .then((result) => TabsPage.journeys = result)
-      .catch((e) => console.error(e));
   }
 
 }
