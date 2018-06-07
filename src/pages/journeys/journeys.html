@@ -6,42 +6,40 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
   <ion-list>
-    <ion-item>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-avatar>
-              <img id="image" src="assets/imgs/default_avatar.png"/>
-            </ion-avatar>
-          </ion-col>
 
-          <ion-col>
-            <ion-label>10:10</ion-label>
-          </ion-col>
+    <ion-item *ngFor="let item of tab">{{item.value}}</ion-item>
 
-          <ion-col>
-            <ion-label>23,00€</ion-label>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-label>Rodez</ion-label>
-          </ion-col>
-
-          <ion-col>
-            <ion-label>Clermont-Ferrand</ion-label>
-          </ion-col>
-
-          <ion-col>
-            <ion-label>JC</ion-label>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
   </ion-list>
+
+  <!-- <ion-card *ngFor="let item of tab" value="{{item}}">
+    <ion-item></ion-item>
+  </ion-card> -->
+
+ <!-- <ion-list>
+
+  <ion-item>
+    <ion-thumbnail item-start>
+      <ion-avatar><img src="assets/imgs/default_avatar.png"></ion-avatar>
+      <h3 class="driverName">Jules</h3>
+    </ion-thumbnail>
+    <h2>Oui</h2> <ion-icon name="md-arrow-round-forward" class="leftArrow"></ion-icon><h2>Non</h2>
+    <p> 10h00 • 8457 €</p>
+
+  </ion-item>
+
+    <ion-item>
+      <ion-thumbnail item-start>
+        <ion-avatar><img src="assets/imgs/denis.jpg"></ion-avatar>
+        <h3 class="driverName">Jules</h3>
+      </ion-thumbnail>
+      <h2>Oui</h2> <ion-icon name="md-arrow-round-forward" class="leftArrow"></ion-icon><h2>Non</h2>
+      <p> 10h00 • 8457 €</p>
+
+    </ion-item>
+
+  </ion-list>-->
 
 </ion-content>

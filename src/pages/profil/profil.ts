@@ -18,6 +18,7 @@ import { Camera, CameraOptions } from "@ionic-native/camera";
 })
 export class ProfilPage {
 
+
   user = {} as User;
   isInitProfile: boolean = false;
   isChanged: boolean = false;

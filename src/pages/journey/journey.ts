@@ -22,26 +22,42 @@ export class JourneyPage {
   journey = {} as Journey;
   date: string;
   hour: string;
+  isSearch: boolean;
+  allJourneys: Journey[];
 
-  constructor(public navCtrl: NavController, private firestore: FirestoreService, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private firestore: FirestoreService, private alertCtrl: AlertController, public navParams: NavParams) {
     this.date = new Date().toISOString();
     this.hour = new Date().toISOString();
     this.journey.passengerNb = 1;
+    this.isSearch = this.navParams.get("isSearch");
+    if (this.isSearch){
+      this.firestore.getAllDocuments(JOURNEY_PATH)
+        .then((result) => this.allJourneys = result)
+        .catch((e) => console.error(e));
+    }
   }
 
-  saveJourney() {
+  searchOrAddJourney() {
     this.setJourneyDate();
-    this.firestore.addDocument(JOURNEY_PATH, this.journey)
-      .then(() => this.navCtrl.pop())
-      .catch((e) => {
-        console.error(e);
-        let alert = this.alertCtrl.create({
-          title: 'Erreur',
-          subTitle: 'Impossible d\'ajouter le trajet.',
-          buttons: ['Ok']
-        });
-        alert.present();
-      })
+    if(this.isSearch){
+      let date = new Date(this.date);
+      let hour = new Date(this.hour);
+      //let result = this.allJourneys.filter(j => j.departure == this.journey.departure && j.arrival == this.journey.arrival && j.date > this.journey.date && j.date < (Timestamp) date.getDate());
+
+    } else {
+      this.firestore.addDocument(JOURNEY_PATH, this.journey)
+        .then(() => this.navCtrl.pop())
+        .catch((e) => {
+          console.error(e);
+          let alert = this.alertCtrl.create({
+            title: 'Erreur',
+            subTitle: 'Impossible d\'ajouter le trajet.',
+            buttons: ['Ok']
+          });
+          alert.present();
+        })
+    }
+
   }
 
   private setJourneyDate() {
