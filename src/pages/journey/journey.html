@@ -26,14 +26,14 @@
     <ion-row>
         <ion-item>
           <ion-label color="primary">Départ</ion-label>
-          <ion-input id="departure" type="text" placeholder="Saisir la ville de départ" [(ngModel)]="journey.departure"></ion-input>
+          <ion-input type="text" placeholder="Saisir la ville de départ" [(ngModel)]="journey.departure"></ion-input>
         </ion-item>
     </ion-row>
 
     <ion-row>
       <ion-item>
         <ion-label color="primary">Arriver</ion-label>
-        <ion-input id="arrival" type="text" placeholder="Saisir la ville d'arriver" [(ngModel)]="journey.arrival"></ion-input>
+        <ion-input type="text" placeholder="Saisir la ville d'arriver" [(ngModel)]="journey.arrival"></ion-input>
       </ion-item>
     </ion-row>
 
@@ -48,6 +48,14 @@
       <ion-item>
         <ion-label color="primary">Heure</ion-label>
         <ion-datetime displayFormat="HH:mm" [(ngModel)]="hour"></ion-datetime>
+      </ion-item>
+    </ion-row>
+
+    <ion-row>
+      <ion-item>
+        <ion-label color="primary">Prix</ion-label>
+        <ion-input type="number" min="0" placeholder="Prix du trajet" text-right [(ngModel)]="journey.price"></ion-input>
+        <ion-icon name="logo-euro" item-right></ion-icon>
       </ion-item>
     </ion-row>
 

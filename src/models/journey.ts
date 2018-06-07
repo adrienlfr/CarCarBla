@@ -6,6 +6,7 @@ export interface Journey {
   date: Timestamp;
   departure: string;
   passengerNb: number;
+  price: number;
 }
 
 export const JOURNEY_PATH = 'Journeys';
