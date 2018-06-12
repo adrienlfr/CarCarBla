@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import {Journey} from "../../models/journey";
+import {Car} from "../../models/car";
 
 /**
  * Generated class for the CarsPage page.
@@ -14,10 +16,15 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class CarsPage {
 
+  cars: Car[];
   tabBarElement: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.tabBarElement = document.querySelector('.tabbar');
+    this.cars =[
+      {model: '206', isActive: true},
+      {model: 'Ford fiesta', isActive: false }
+    ]
   }
 
   ionViewDidLoad() {

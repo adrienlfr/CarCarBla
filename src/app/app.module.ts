@@ -20,9 +20,10 @@ import { GooglePlus } from "@ionic-native/google-plus";
 import {ProfileService} from "../services/profile.service";
 import {FirestoreService} from "../services/firestore.service";
 import {CarsPage} from "../pages/cars/cars";
-import {SearchJourneyPage} from "../pages/search-journey/search-journey";
 import {JourneyPage} from "../pages/journey/journey";
 import { Camera } from "@ionic-native/camera";
+import {AngularFirestoreModule} from "angularfire2/firestore";
+import {CarPage} from "../pages/car/car";
 
 @NgModule({
   declarations: [
@@ -34,14 +35,16 @@ import { Camera } from "@ionic-native/camera";
     LoginPage,
     RegisterPage,
     CarsPage,
-    SearchJourneyPage,
-    JourneyPage
+    JourneyPage,
+    CarPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -53,8 +56,8 @@ import { Camera } from "@ionic-native/camera";
     LoginPage,
     RegisterPage,
     CarsPage,
-    SearchJourneyPage,
-    JourneyPage
+    JourneyPage,
+    CarPage
   ],
   providers: [
     StatusBar,
