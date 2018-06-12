@@ -8,11 +8,16 @@ import {User, USER_PATH} from "../../models/user";
 import {AlertController, NavController} from "ionic-angular";
 import {Journey, JOURNEY_PATH} from "../../models/journey";
 import {FirestoreService} from "../../services/firestore.service";
+import {AngularFirestoreCollection} from "angularfire2/firestore";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
+
+  static journeysCollection: AngularFirestoreCollection<Journey>;
+  static journeys: Observable<Journey[]>;
 
   static user = {} as User;
   static userId: string;
@@ -21,11 +26,13 @@ export class TabsPage {
   tab2Root = JourneysPage;
   tab3Root = ProfilPage;
 
-  constructor(private auth: AuthService, public navCtrl: NavController, private firebase: FirestoreService, private alertCtrl: AlertController) {
-    this.loadProfile();
-    TabsPage.userId = this.auth.uid;
-  }
+  constructor(private auth: AuthService, public navCtrl: NavController, private firebase: FirestoreService, private alertCtrl: AlertController) {}
 
+  ionViewWillEnter() {
+    TabsPage.userId = this.auth.uid;
+    this.loadProfile();
+    this.loadJourneys();
+  }
 
   get authenticated(): boolean {
     return this.auth.authenticated;
@@ -48,6 +55,13 @@ export class TabsPage {
         });
         alert.present();
       });
+  }
+
+  private loadJourneys() {
+    this.firebase.getDocuments(JOURNEY_PATH).then((result) => TabsPage.journeysCollection = result);
+    if (TabsPage.journeysCollection != null) {
+      TabsPage.journeys = TabsPage.journeysCollection.valueChanges()
+    }
   }
 
 }

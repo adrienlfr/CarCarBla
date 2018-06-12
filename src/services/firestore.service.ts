@@ -19,9 +19,11 @@ export class FirestoreService {
     });
   }
 
-  getAllDocuments(collection: string): Promise<any> {
+  getDocuments(collection: string, ...where): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.db.collection(collection).get()
+      let query = this.db.collection(collection);
+      where.forEach(w => query = query.where(...w));
+      query.get()
         .then((querySnapshot) => {
           let arr = [];
           querySnapshot.forEach(function (doc) {

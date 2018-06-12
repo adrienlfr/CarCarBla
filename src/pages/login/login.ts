@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, Platform} from 'ionic-angular';
+import {LoadingController, NavController, Platform} from 'ionic-angular';
 
 import { AuthService } from "../../services/auth.service";
 
@@ -22,17 +22,28 @@ import { ConnectionUser } from "../../models/connectionUser";
 export class LoginPage {
   user = {} as ConnectionUser;
 
-  constructor(private auth: AuthService, public navCtrl: NavController, private platform: Platform) {
+  constructor(private auth: AuthService, public navCtrl: NavController, private platform: Platform, private loadingCtrl: LoadingController) {
 
   }
 
   async login(user: ConnectionUser) {
+    let loadingPopup = this.loadingCtrl.create({
+      spinner: 'crescent',
+      content: ''
+    });
+    loadingPopup.present();
+
     try {
       this.auth.signInWithEmail(user).then(
-        () => this.navCtrl.setRoot(TabsPage),
-        error => console.error(error.message)
-      );
+        () => {
+          loadingPopup.dismiss();
+          this.navCtrl.setRoot(TabsPage)})
+        .catch(error => {
+              loadingPopup.dismiss();
+              console.error(error.message)
+            });
     } catch (e) {
+      loadingPopup.dismiss();
       console.error(e.message);
     }
   }

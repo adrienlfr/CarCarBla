@@ -10,14 +10,22 @@
 
   <ion-list>
 
-    <ion-card *ngFor="let item of tab">
+    <ion-card *ngFor="let item of journeys">
       <ion-item>
         <ion-grid>
           <ion-row>
-            <ion-col>{{item.arrival}}</ion-col>
-            <ion-col>{{item.departure}}</ion-col>
-            <ion-col>{{item.passengerNb}}</ion-col>
-            <ion-col>{{item.date}}</ion-col>
+            <ion-col col-2 text-center>
+              <ion-avatar>
+                <img id="image" class="item-avatar" src={{getDriverPhotoURL(item.driver)}} />
+              </ion-avatar>
+            </ion-col>
+            <ion-col col-5 text-wrap text-center>{{item.departure}}</ion-col>
+            <ion-col col-5 text-wrap text-center>{{item.arrival}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-2 text-wrap text-center class="username">Jean Cloud</ion-col>
+            <ion-col col-5 text-center>{{convertTimestampToString(item.date)}}</ion-col>
+            <ion-col col-5 text-center>{{item.price}}€</ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>

@@ -18,7 +18,7 @@ export class JourneyService {
 
   getAllJourneys(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.firestoreSrv.getAllDocuments(JOURNEY_PATH)
+      this.firestoreSrv.getDocuments(JOURNEY_PATH)
         .then((result) => resolve(result))
         .catch((error) => reject(error))
     });

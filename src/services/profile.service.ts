@@ -18,7 +18,7 @@ export class ProfileService {
 
   getAllUsers(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.firestoreSrv.getAllDocuments(USER_PATH)
+      this.firestoreSrv.getDocuments(USER_PATH)
         .then((result) => resolve(result))
         .catch((error) => reject(error))
     });

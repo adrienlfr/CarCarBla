@@ -22,6 +22,7 @@ import {FirestoreService} from "../services/firestore.service";
 import {CarsPage} from "../pages/cars/cars";
 import {JourneyPage} from "../pages/journey/journey";
 import { Camera } from "@ionic-native/camera";
+import {AngularFirestoreModule} from "angularfire2/firestore";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,9 @@ import { Camera } from "@ionic-native/camera";
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

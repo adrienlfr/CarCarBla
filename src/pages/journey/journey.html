@@ -52,7 +52,7 @@
       </ion-item>
     </ion-row>
 
-    <ion-row>
+    <ion-row *ngIf="!isSearch">
       <ion-item>
         <ion-label color="primary">Prix</ion-label>
         <ion-input type="number" min="0" placeholder="Prix du trajet" text-right [(ngModel)]="journey.price"></ion-input>

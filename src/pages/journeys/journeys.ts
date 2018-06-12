@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import {Journey} from "../../models/journey";
-import * as firebase from "firebase";
-import Timestamp = firebase.firestore.Timestamp;
+import {LoadingController, NavController, NavParams} from 'ionic-angular';
+import {Journey, JOURNEY_PATH} from "../../models/journey";
+import { firestore } from "firebase";
+import Timestamp = firestore.Timestamp;
+import moment from 'moment';
+import {FirestoreService} from "../../services/firestore.service";
 
 @Component({
   selector: 'page-journeys',
@@ -10,15 +12,59 @@ import Timestamp = firebase.firestore.Timestamp;
 })
 export class JourneysPage {
 
-  tab: Journey[];
+  journeys: Journey[];
+
+  private filterDeparture: string;
+  private filterArrival: string;
+  private filterDate: Timestamp;
+  private filterNbPassengers: number;
+  private isSearch: boolean;
 
 
-  constructor(public navCtrl: NavController) {
-    this.tab = [
-      {arrival: 'Clermont-Ferrand', date: Timestamp.fromDate(new Date()), departure: "Rodez", passengerNb: 3, nbPlacesAvailable: 3, price: 5},
-      {arrival: 'Loin', date: Timestamp.fromDate(new Date()), departure: "Putier-Sur-Marne", passengerNb: 2, nbPlacesAvailable: 1, price: 15},
-      {arrival: 'Oui', date: Timestamp.fromDate(new Date()), departure: "Poop", passengerNb: 2, nbPlacesAvailable: 0, price: 4}
-    ]
+  constructor(public navCtrl: NavController, private firestore: FirestoreService, public navParams: NavParams, private loadingCtrl: LoadingController) {
+    this.filterDeparture = this.navParams.get('departure');
+    this.filterArrival = this.navParams.get('arrival');
+    this.filterDate = this.navParams.get('date');
+    this.filterNbPassengers = this.navParams.get('nbPassengers');
+    this.isSearch = this.navParams.get("isSearch");
+
+    this.loadData();
+  }
+
+  loadData() {
+    let loadingPopup = this.loadingCtrl.create({
+      spinner: 'crescent',
+      content: ''
+    });
+    loadingPopup.present();
+
+    if (this.isSearch) {
+      this.firestore.getDocuments(JOURNEY_PATH,
+        ['departure', '==', this.filterDeparture],
+        ['arrival', '==', this.filterArrival],
+        ['date', '>', this.filterDate],
+        ['date', '<', Timestamp.fromMillis(this.filterDate.toMillis() + 86400000)])
+        .then((result) => {
+          this.journeys = result.filter(journey => journey.nbPlacesAvailable >= this.filterNbPassengers);
+          loadingPopup.dismiss();
+        });
+    }
+  }
+
+  convertTimestampToString(date: any): string {
+    return moment(Timestamp.fromDate(new Date(date)).toMillis()).format("DD MMM H:mm");
+  }
+
+  getDriverPhotoURL(idDriver: string): string {
+    // console.log('GetPhoto');
+    /*this.firestore.getDocument(USER_PATH, idDriver)
+      .then((result) => {
+        if (result as User) {
+          return (result as User).photoUrl;
+        }
+      })
+      .catch((e) => console.error(e));*/
+    return 'assets/imgs/default_avatar.png';
   }
 
 }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {NavController, Platform} from 'ionic-angular';
+import {LoadingController, NavController, Platform} from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { User } from "../../models/user";
 import {TabsPage} from "../tabs/tabs";
+import {ConnectionUser} from "../../models/connectionUser";
 
 /**
  * Generated class for the RegisterPage page.
@@ -17,16 +18,27 @@ import {TabsPage} from "../tabs/tabs";
 })
 export class RegisterPage {
 
-  user = {} as User;
-  password: string;
+  user = {} as ConnectionUser;
 
-  constructor(private auth: AuthService, public navCtrl: NavController, private platform: Platform) {
+  constructor(private auth: AuthService, public navCtrl: NavController, private platform: Platform, private loadingCtrl: LoadingController) {
   }
 
-  async register(user: User, password: string) {
-    this.auth.signUp(user.email, password)
-      .then(() => this.navCtrl.setRoot(TabsPage))
-      .catch(error => console.error(error.message))
+  async register(user: ConnectionUser) {
+    let loadingPopup = this.loadingCtrl.create({
+      spinner: 'crescent',
+      content: ''
+    });
+    loadingPopup.present();
+
+    this.auth.signUp(user.email, user.password)
+      .then(() => {
+        loadingPopup.dismiss();
+        this.navCtrl.setRoot(TabsPage)
+      })
+      .catch(error => {
+        loadingPopup.dismiss();
+        console.error(error.message)
+      })
   }
 
   registerWithGoogle() {
