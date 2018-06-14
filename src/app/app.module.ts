@@ -17,12 +17,12 @@ import { FIREBASE_CONFIG } from "./app.firebase.config";
 import { AngularFireAuth , AngularFireAuthModule } from "angularfire2/auth";
 import { AuthService } from "../services/auth.service";
 import { GooglePlus } from "@ionic-native/google-plus";
-import {ProfileService} from "../services/profile.service";
 import {FirestoreService} from "../services/firestore.service";
 import {CarsPage} from "../pages/cars/cars";
 import {JourneyPage} from "../pages/journey/journey";
 import { Camera } from "@ionic-native/camera";
 import {AngularFirestoreModule} from "angularfire2/firestore";
+import {DetailJourneyPage} from "../pages/detail-journey/detail-journey";
 
 @NgModule({
   declarations: [
@@ -34,15 +34,15 @@ import {AngularFirestoreModule} from "angularfire2/firestore";
     LoginPage,
     RegisterPage,
     CarsPage,
-    JourneyPage
+    JourneyPage,
+    DetailJourneyPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
-    AngularFirestoreModule,
-    AngularFirestoreModule.enablePersistence()
+    AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -54,13 +54,13 @@ import {AngularFirestoreModule} from "angularfire2/firestore";
     LoginPage,
     RegisterPage,
     CarsPage,
-    JourneyPage
+    JourneyPage,
+    DetailJourneyPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     AuthService,
-    ProfileService,
     FirestoreService,
     AngularFireAuth,
     GooglePlus,

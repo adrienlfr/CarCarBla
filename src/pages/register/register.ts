@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {LoadingController, NavController, Platform} from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
-import { User } from "../../models/user";
 import {TabsPage} from "../tabs/tabs";
 import {ConnectionUser} from "../../models/connectionUser";
 
@@ -45,9 +44,5 @@ export class RegisterPage {
     this.auth.signUpWithGoogle(this.platform)
       .then(() => this.navCtrl.setRoot(TabsPage))
       .catch((error) => console.log(error));
-  }
-
-  login() {
-    this.navCtrl.pop();
   }
 }

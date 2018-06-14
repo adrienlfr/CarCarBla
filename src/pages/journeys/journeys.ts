@@ -5,6 +5,8 @@ import { firestore } from "firebase";
 import Timestamp = firestore.Timestamp;
 import moment from 'moment';
 import {FirestoreService} from "../../services/firestore.service";
+import {TabsPage} from "../tabs/tabs";
+import {DetailJourneyPage} from "../detail-journey/detail-journey";
 
 @Component({
   selector: 'page-journeys',
@@ -27,7 +29,9 @@ export class JourneysPage {
     this.filterDate = this.navParams.get('date');
     this.filterNbPassengers = this.navParams.get('nbPassengers');
     this.isSearch = this.navParams.get("isSearch");
+  }
 
+  ionViewWillEnter() {
     this.loadData();
   }
 
@@ -48,6 +52,13 @@ export class JourneysPage {
           this.journeys = result.filter(journey => journey.nbPlacesAvailable >= this.filterNbPassengers);
           loadingPopup.dismiss();
         });
+    } else {
+      this.firestore.getDocuments(JOURNEY_PATH,
+        ['driver', '==', TabsPage.userId])
+        .then((result) => {
+          this.journeys = result;
+          loadingPopup.dismiss();
+        })
     }
   }
 
@@ -55,16 +66,8 @@ export class JourneysPage {
     return moment(Timestamp.fromDate(new Date(date)).toMillis()).format("DD MMM H:mm");
   }
 
-  getDriverPhotoURL(idDriver: string): string {
-    // console.log('GetPhoto');
-    /*this.firestore.getDocument(USER_PATH, idDriver)
-      .then((result) => {
-        if (result as User) {
-          return (result as User).photoUrl;
-        }
-      })
-      .catch((e) => console.error(e));*/
-    return 'assets/imgs/default_avatar.png';
+  onCardClicked(idJourney: string) {
+    this.navCtrl.push(DetailJourneyPage, {'idJourney': idJourney});
   }
 
 }

@@ -41,7 +41,7 @@
       <ion-input readonly [(ngModel)]="user.email"></ion-input>
     </ion-item>
 
-    <button *ngIf="!isInitProfile" ion-item (click)="onClickCarsButton()">
+    <button *ngIf="!isInitProfile" ion-item [navPush]="carsPage">
       <ion-icon name="car" item-start color="primary"></ion-icon>
       Mes voitures
     </button>

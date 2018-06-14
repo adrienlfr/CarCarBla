@@ -31,17 +31,20 @@ export class MyApp {
         .subscribe(
           user => {
             if (user) {
+              this.statusBar.styleDefault();
+              this.splashScreen.hide();
               this.rootPage = TabsPage;
             } else {
+              this.statusBar.styleDefault();
+              this.splashScreen.hide();
               this.rootPage = LoginPage;
             }
           },
           () => {
+            this.statusBar.styleDefault();
+            this.splashScreen.hide();
             this.rootPage = LoginPage;
           });
-
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
     });
   }
 

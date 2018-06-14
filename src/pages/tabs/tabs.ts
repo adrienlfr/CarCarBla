@@ -6,18 +6,12 @@ import { HomePage } from '../home/home';
 import { AuthService } from "../../services/auth.service";
 import {User, USER_PATH} from "../../models/user";
 import {AlertController, NavController} from "ionic-angular";
-import {Journey, JOURNEY_PATH} from "../../models/journey";
 import {FirestoreService} from "../../services/firestore.service";
-import {AngularFirestoreCollection} from "angularfire2/firestore";
-import {Observable} from "rxjs/Observable";
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-
-  static journeysCollection: AngularFirestoreCollection<Journey>;
-  static journeys: Observable<Journey[]>;
 
   static user = {} as User;
   static userId: string;
@@ -31,7 +25,6 @@ export class TabsPage {
   ionViewWillEnter() {
     TabsPage.userId = this.auth.uid;
     this.loadProfile();
-    this.loadJourneys();
   }
 
   get authenticated(): boolean {
@@ -55,13 +48,6 @@ export class TabsPage {
         });
         alert.present();
       });
-  }
-
-  private loadJourneys() {
-    this.firebase.getDocuments(JOURNEY_PATH).then((result) => TabsPage.journeysCollection = result);
-    if (TabsPage.journeysCollection != null) {
-      TabsPage.journeys = TabsPage.journeysCollection.valueChanges()
-    }
   }
 
 }

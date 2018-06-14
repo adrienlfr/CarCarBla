@@ -21,10 +21,9 @@ import { ConnectionUser } from "../../models/connectionUser";
 })
 export class LoginPage {
   user = {} as ConnectionUser;
+  registerPage = RegisterPage;
 
-  constructor(private auth: AuthService, public navCtrl: NavController, private platform: Platform, private loadingCtrl: LoadingController) {
-
-  }
+  constructor(private auth: AuthService, public navCtrl: NavController, private platform: Platform, private loadingCtrl: LoadingController) {}
 
   async login(user: ConnectionUser) {
     let loadingPopup = this.loadingCtrl.create({
@@ -46,10 +45,6 @@ export class LoginPage {
       loadingPopup.dismiss();
       console.error(e.message);
     }
-  }
-
-  signup(){
-    this.navCtrl.push(RegisterPage);
   }
 
   loginWithGoogle() {

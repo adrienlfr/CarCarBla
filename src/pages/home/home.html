@@ -15,11 +15,11 @@
     <ion-row class="rowButton">
       <ion-col>
         <ion-row>
-          <button class="buttonHome" ion-button block (click)="addJourney()">Proposer un trajet</button>
+          <button class="buttonHome" ion-button block [navPush]="journeyPage" [navParams]="{isSearch: false}">Proposer un trajet</button>
         </ion-row>
 
         <ion-row>
-          <button class="buttonHome" ion-button block (click)="searchJourney()" >Rechercher un trajet</button>
+          <button class="buttonHome" ion-button block [navPush]="journeyPage" [navParams]="{isSearch: true}">Rechercher un trajet</button>
         </ion-row>
       </ion-col>
     </ion-row>

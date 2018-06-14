@@ -82,9 +82,11 @@ export class FirestoreService {
     });
   }
 
-  getAllSecondDocuments(collection: string, firstId: string, secondCollection: string): Promise<any> {
+  getSecondDocuments(collection: string, firstId: string, secondCollection: string, ...where): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.db.collection(collection).doc(firstId).collection(secondCollection).get()
+      let query = this.db.collection(collection).doc(firstId).collection(secondCollection);
+      where.forEach(w => query = query.where(...w));
+      query.get()
         .then((querySnapshot) => {
           let arr = [];
           querySnapshot.forEach(function (doc) {
@@ -115,6 +117,14 @@ export class FirestoreService {
   addSecondDocument(collection: string, docId: string, secondCollection: string, dataObject: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.db.collection(collection).doc(docId).collection(secondCollection).add(dataObject)
+        .then((obj: any) => resolve(obj))
+        .catch((error: any) => reject(error));
+    });
+  }
+
+  setSecondDocument(collection: string, docId: string, secondCollection: string, secondDocId: string, dataObject: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.db.collection(collection).doc(docId).collection(secondCollection).doc(secondDocId).set(dataObject)
         .then((obj: any) => resolve(obj))
         .catch((error: any) => reject(error));
     });

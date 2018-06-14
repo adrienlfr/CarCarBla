@@ -7,12 +7,96 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>DetailJourney</ion-title>
+    <ion-title>Trajet</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
+  <ion-card>
+    <ion-item>
+      <ion-grid>
+      <!-- Info Conducteur -->
+      <ion-row align-items-center margin-bottom>
+        <ion-col class="driver" text-center>
+          {{driver.username}}
+        </ion-col>
+        <ion-col>
+          <img [src]="driver.photoUrl" />
+        </ion-col>
+      </ion-row>
+
+      <!-- Info Trajet -->
+      <ion-row class="infoJourney">
+        <ion-col col-4>
+          De :
+        </ion-col>
+        <ion-col col-8>
+          {{journey.departure}}
+        </ion-col>
+      </ion-row>
+      <ion-row class="infoJourney">
+        <ion-col col-4>
+          A :
+        </ion-col>
+        <ion-col col-8>
+          {{journey.arrival}}
+        </ion-col>
+      </ion-row>
+      <ion-row class="infoJourney">
+        <ion-col col-4>
+          Départ le :
+        </ion-col>
+        <ion-col col-8>
+          {{dateFormatted}}
+        </ion-col>
+      </ion-row>
+
+      <!-- Info Passagers -->
+      <ion-row margin-top>
+        <ion-col col-6 text-center *ngIf="passengers[0] != null">
+          <ion-card>
+            <ion-avatar >
+              <img class="passengers_img" [src]="profilePassenger[0].photoUrl">
+            </ion-avatar>
+            {{profilePassenger[0].username}}
+          </ion-card>
+        </ion-col>
+        <ion-col col-6 text-center *ngIf="passengers[1] != null">
+          <ion-card>
+            <ion-avatar>
+              <img class="passengers_img" [src]="profilePassenger[1].photoUrl">
+            </ion-avatar>
+            {{profilePassenger[1].username}}
+          </ion-card>
+        </ion-col>
+      </ion-row>
+        <ion-row>
+          <ion-col col-6 text-center *ngIf="passengers[2] != null">
+            <ion-card>
+              <ion-avatar>
+                <img class="passengers_img" [src]="profilePassenger[2].photoUrl">
+              </ion-avatar>
+              {{profilePassenger[2].username}}
+            </ion-card>
+          </ion-col>
+          <ion-col col-6 text-center *ngIf="passengers[3] != null">
+            <ion-card>
+              <ion-avatar>
+                <img class="passengers_img" [src]="profilePassenger[3].photoUrl">
+              </ion-avatar>
+              {{profilePassenger[3].username}}
+            </ion-card>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+    </ion-item>
+  </ion-card>
+
+  <div class="detailButton">
+    <button ion-button clear *ngIf="isDelete || journey.nbPlacesAvailable > 0" [color]="isDelete ? 'danger' : 'secondary'" (click)="onClickButtonDetailJourney()">{{textButton}}</button>
+  </div>
 
 </ion-content>

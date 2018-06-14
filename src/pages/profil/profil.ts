@@ -5,8 +5,7 @@ import { AuthService } from "../../services/auth.service";
 import { storage } from 'firebase';
 
 import { LoginPage } from "../login/login";
-import { User } from "../../models/user";
-import { ProfileService } from "../../services/profile.service";
+import {User, USER_PATH} from "../../models/user";
 import { CarsPage } from "../cars/cars";
 import { TabsPage } from "../tabs/tabs";
 import { FirestoreService } from "../../services/firestore.service";
@@ -18,7 +17,7 @@ import { Camera, CameraOptions } from "@ionic-native/camera";
 })
 export class ProfilPage {
 
-
+  carsPage = CarsPage;
   user = {} as User;
   isInitProfile: boolean = false;
   isChanged: boolean = false;
@@ -35,8 +34,7 @@ export class ProfilPage {
     correctOrientation: true
   };
 
-  constructor(private auth: AuthService, private camera: Camera,
-              private fires: FirestoreService, private profileSrv: ProfileService,
+  constructor(private auth: AuthService, private camera: Camera, private firestore: FirestoreService,
               public navCtrl: NavController, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
     if (this.navParams.get('isInitProfile')) {
       this.isInitProfile = true;
@@ -55,10 +53,6 @@ export class ProfilPage {
       });
   }
 
-  onClickCarsButton() {
-    this.navCtrl.push(CarsPage);
-  }
-
   private loadProfile() {
     this.user.email = this.auth.email;
     this.user.username = this.auth.displayName;
@@ -71,7 +65,7 @@ export class ProfilPage {
 
   saveProfile() : void {
     if ( this.isInitProfile ) {
-      this.profileSrv.addUser(this.auth.uid, this.user)
+      this.firestore.setDocument(USER_PATH, this.auth.uid, this.user)
         .then(() => {
           this.isChanged = false;
           this.isInitProfile = false;
@@ -79,7 +73,7 @@ export class ProfilPage {
         })
         .catch((e) => console.error(e));
     } else {
-      this.profileSrv.updateUser(this.auth.uid, this.user);
+      this.firestore.updateDocument(USER_PATH, this.auth.uid, this.user);
     }
   }
 
