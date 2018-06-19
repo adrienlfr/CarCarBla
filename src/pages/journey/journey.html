@@ -26,14 +26,15 @@
     <ion-row>
         <ion-item>
           <ion-label color="primary">Départ</ion-label>
-          <ion-input id="departure" type="text" placeholder="Saisir la ville de départ" [(ngModel)]="journey.departure"></ion-input>
+          <ion-input id="departure" #departureInput type="text" placeholder="Saisir la ville de départ" [(ngModel)]="journey.departure"></ion-input>
+
         </ion-item>
     </ion-row>
 
     <ion-row>
       <ion-item>
         <ion-label color="primary">Arriver</ion-label>
-        <ion-input id="arrival" type="text" placeholder="Saisir la ville d'arriver" [(ngModel)]="journey.arrival"></ion-input>
+        <ion-input id="arrival" #arrivalInput type="text" placeholder="Saisir la ville d'arriver" [(ngModel)]="journey.arrival"></ion-input>
       </ion-item>
     </ion-row>
 
