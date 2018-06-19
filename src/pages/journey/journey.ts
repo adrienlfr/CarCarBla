@@ -55,10 +55,9 @@ export class JourneyPage {
     this.inputArrivalElem = this.inputArrival.nativeElement.querySelector('input');
 
     this.createAutocomplete(this.inputStartElem, 0).subscribe((location) => {
-      console.log('start data :', location);
+      console.log('start data :', this.journey.departure);
     });
     this.createAutocomplete(this.inputArrivalElem, 1).subscribe((location) => {
-      console.log("arrival data : ", location);
       console.log("arrival data : ", this.journey.arrival);
     })
   }
