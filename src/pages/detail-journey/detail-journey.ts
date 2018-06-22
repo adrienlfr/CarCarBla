@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import {AlertController, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
-import {Journey, JOURNEY_PATH} from "../../models/journey";
-import {User, USER_PATH} from "../../models/user";
-import {FirestoreService} from "../../services/firestore.service";
-import * as firebase from "firebase";
+import { AlertController, Loading, LoadingController, NavController, NavParams } from 'ionic-angular';
+import { Journey, JOURNEY_PATH } from "../../models/journey";
+import { User, USER_PATH } from "../../models/user";
+import {FirestoreService } from "../../services/firestore.service";
 import moment from "moment";
-import {TabsPage} from "../tabs/tabs";
-import {Passenger, PASSENGER_PATH} from "../../models/passenger";
+import { TabsPage } from "../tabs/tabs";
+import { Passenger, PASSENGER_PATH } from "../../models/passenger";
 
 /**
  * Generated class for the DetailJourneyPage page.

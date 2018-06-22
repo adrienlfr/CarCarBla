@@ -16,15 +16,21 @@
 
 <ion-content padding>
 
-  <ion-item>
-    <ion-label floating>Adresse email</ion-label>
-    <ion-input type="email" clearInput [(ngModel)]="user.email"></ion-input>
-  </ion-item>
+  <form [formGroup]="loginForm">
+    <ion-item>
+      <ion-label floating>Adresse email</ion-label>
+      <ion-input type="email" clearInput formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!loginForm.controls.email.valid">
+      <p>Please enter a valid name.</p>
+    </ion-item>
 
-  <ion-item>
-    <ion-label floating>Mot de passe</ion-label>
-    <ion-input type="password" clearInput [(ngModel)]="user.password"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label floating>Mot de passe</ion-label>
+      <ion-input type="password" clearInput formControlName="password"></ion-input>
+    </ion-item>
+  </form>
+
 
   <div padding-horizontal margin-top>
 

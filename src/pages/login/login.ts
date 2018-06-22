@@ -7,6 +7,7 @@ import {RegisterPage} from "../register/register";
 import {TabsPage} from "../tabs/tabs";
 
 import { ConnectionUser } from "../../models/connectionUser";
+import {FormBuilder, FormGroup, Validator, Validators} from "@angular/forms";
 
 /**
  * Generated class for the LoginPage page.
@@ -22,8 +23,15 @@ import { ConnectionUser } from "../../models/connectionUser";
 export class LoginPage {
   user = {} as ConnectionUser;
   registerPage = RegisterPage;
+  loginForm: FormGroup;
 
-  constructor(private auth: AuthService, public navCtrl: NavController, private platform: Platform, private loadingCtrl: LoadingController) {}
+  constructor(private auth: AuthService, public navCtrl: NavController, private platform: Platform,
+              private loadingCtrl: LoadingController, private formBuilder: FormBuilder) {
+    this.loginForm = formBuilder.group({
+      email: ['', Validators.compose([Validators.required, Validators.pattern('^[\w0-9]+@[\w0-9]+\.[\w]+$/gm')])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+    })
+  }
 
   async login(user: ConnectionUser) {
     let loadingPopup = this.loadingCtrl.create({
