@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController, Loading, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { Journey, JOURNEY_PATH } from "../../models/journey";
-import { User, USER_PATH } from "../../models/user";
+import {JOURNEYS_PATH, User, USER_PATH} from "../../models/user";
 import {FirestoreService } from "../../services/firestore.service";
 import moment from "moment";
 import { TabsPage } from "../tabs/tabs";
@@ -59,15 +59,26 @@ export class DetailJourneyPage {
   }
 
   private driverDeleteJourney() {
-    this.firestore.deleteDocument(JOURNEY_PATH, this.idJourney)
-      .then(() => this.showAlert('Trajet', 'Le trajet a bien été supprimé.', true))
-      .catch(() => this.showAlert('Erreur', 'Impossible de supprimer le trajet.', false))
+    let users = [];
+    this.firestore.getSecondDocuments(JOURNEY_PATH, this.idJourney, PASSENGER_PATH).then((result) => {
+      users = result;
+
+      this.firestore.deleteDocument(JOURNEY_PATH, this.idJourney)
+        .then(() => {
+          users.forEach((user) => {
+            this.firestore.deleteSecondDocument(USER_PATH, user.$key, JOURNEY_PATH, this.idJourney);
+          });
+          this.showAlert('Trajet', 'Le trajet a bien été supprimé.', true)
+        })
+        .catch(() => this.showAlert('Erreur', 'Impossible de supprimer le trajet.', false));
+    });
   }
 
   private passengerDeleteJourney(idUser: string) {
     this.firestore.deleteSecondDocument(JOURNEY_PATH, this.idJourney, PASSENGER_PATH, idUser)
       .then(() => {
         console.log('then');
+        this.firestore.deleteSecondDocument(USER_PATH, TabsPage.userId, JOURNEY_PATH, this.idJourney);
         this.journey.nbPlacesAvailable += this.passengers.filter(user => user != null && user.id == idUser).length;
         this.firestore.updateDocument(JOURNEY_PATH, this.idJourney, this.journey);
         this.showAlert('Supression', 'La supression à bien été effectué.', true)
@@ -101,7 +112,9 @@ export class DetailJourneyPage {
                 this.showAlert('Erreur', 'Impossible d\'ajouter le(s) passager(s).', false)
               });
             this.journey.nbPlacesAvailable -= nbPlaceSelected;
-            this.firestore.updateDocument(JOURNEY_PATH, this.idJourney, this.journey);
+            this.firestore.updateDocument(JOURNEY_PATH, this.idJourney, this.journey).then(() => {
+              this.firestore.setSecondDocument(USER_PATH, idUser, JOURNEYS_PATH, this.idJourney, {id: this.idJourney});
+            });
           }
         }]});
     if (this.journey.nbPlacesAvailable > 1) {

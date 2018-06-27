@@ -18,12 +18,10 @@ import { AngularFireAuth , AngularFireAuthModule } from "angularfire2/auth";
 import { AuthService } from "../services/auth.service";
 import { GooglePlus } from "@ionic-native/google-plus";
 import {FirestoreService} from "../services/firestore.service";
-import {CarsPage} from "../pages/cars/cars";
 import {JourneyPage} from "../pages/journey/journey";
 import { Camera } from "@ionic-native/camera";
 import {AngularFirestoreModule} from "angularfire2/firestore";
 import {DetailJourneyPage} from "../pages/detail-journey/detail-journey";
-import {CarPage} from "../pages/car/car";
 
 @NgModule({
   declarations: [
@@ -34,10 +32,8 @@ import {CarPage} from "../pages/car/car";
     TabsPage,
     LoginPage,
     RegisterPage,
-    CarsPage,
     JourneyPage,
-    DetailJourneyPage,
-    CarPage
+    DetailJourneyPage
   ],
   imports: [
     BrowserModule,
@@ -56,10 +52,8 @@ import {CarPage} from "../pages/car/car";
     TabsPage,
     LoginPage,
     RegisterPage,
-    CarsPage,
     JourneyPage,
-    DetailJourneyPage,
-    CarPage
+    DetailJourneyPage
   ],
   providers: [
     StatusBar,

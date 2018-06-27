@@ -3,8 +3,8 @@
     <ion-title>
       Mon profil
     </ion-title>
-    <ion-buttons end *ngIf="isChanged">
-      <button ion-button (click)="saveProfile()">
+    <ion-buttons end>
+      <button ion-button (click)="saveProfile()" [disabled]="!profilForm.valid">
         Sauvegarder
       </button>
     </ion-buttons>
@@ -13,42 +13,45 @@
 
 <ion-content>
 
-  <ion-list no-lines>
-
     <ion-item>
       <ion-avatar>
         <img id="image" class="item-avatar" (click)="presentActionSheetPicture()" [src]="user.photoUrl" />
       </ion-avatar>
     </ion-item>
 
-    <ion-item>
-      <ion-label color="primary">Nom utilisateur</ion-label>
-      <ion-input id="username" placeholder="Saisir votre nom d'utilisateur" [(ngModel)]="user.username"></ion-input>
-    </ion-item>
+    <form [formGroup]="profilForm">
+      <ion-item [ngClass]="{'error-border':!profilForm.controls.username.valid && profilForm.controls.username.touched}">
+        <ion-label color="primary">Nom utilisateur</ion-label>
+        <ion-input formControlName="username" clearInput placeholder="Saisir votre nom d'utilisateur"></ion-input>
+      </ion-item>
+      <ion-item class="msgErreur" *ngIf="profilForm.controls.username.hasError('required') && profilForm.controls.username.touched">
+        Le pseudo doit être renseigné.
+      </ion-item>
 
-    <ion-item>
-      <ion-label color="primary">Prenom</ion-label>
-      <ion-input id="firstname" placeholder="Saisir votre nom" [(ngModel)]="user.firstname"></ion-input>
-    </ion-item>
+      <ion-item [ngClass]="{'error-border':!profilForm.controls.firstname.valid && profilForm.controls.firstname.touched}">
+        <ion-label color="primary">Prenom</ion-label>
+        <ion-input formControlName="firstname" clearInput placeholder="Saisir votre nom"></ion-input>
+      </ion-item>
+      <ion-item class="msgErreur" *ngIf="profilForm.controls.firstname.hasError('required') && profilForm.controls.firstname.touched">
+        Votre prénom doit être renseigné.
+      </ion-item>
 
-    <ion-item>
-      <ion-label color="primary">Nom</ion-label>
-      <ion-input id="lastname" placeholder="Saisir votre prenom" [(ngModel)]="user.lastname"></ion-input>
-    </ion-item>
+      <ion-item [ngClass]="{'error-border':!profilForm.controls.lastname.valid && profilForm.controls.lastname.touched}">
+        <ion-label color="primary">Nom</ion-label>
+        <ion-input formControlName="lastname" clearInput placeholder="Saisir votre prenom"></ion-input>
+      </ion-item>
+      <ion-item class="msgErreur" *ngIf="profilForm.controls.lastname.hasError('required') && profilForm.controls.lastname.touched">
+        Votre nom de famille doit être renseigné.
+      </ion-item>
+    </form>
 
     <ion-item>
       <ion-label color="primary">Email</ion-label>
       <ion-input readonly [(ngModel)]="user.email"></ion-input>
     </ion-item>
 
-    <button *ngIf="!isInitProfile" ion-item [navPush]="carsPage">
-      <ion-icon name="car" item-start color="primary"></ion-icon>
-      Mes voitures
-    </button>
-
     <ion-item *ngIf="!isInitProfile">
       <button ion-button item-end (click)="logout()">Déconnexion</button>
     </ion-item>
-  </ion-list>
 
 </ion-content>

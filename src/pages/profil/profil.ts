@@ -6,10 +6,10 @@ import { storage } from 'firebase';
 
 import { LoginPage } from "../login/login";
 import {User, USER_PATH} from "../../models/user";
-import { CarsPage } from "../cars/cars";
 import { TabsPage } from "../tabs/tabs";
 import { FirestoreService } from "../../services/firestore.service";
 import { Camera, CameraOptions } from "@ionic-native/camera";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'page-profil',
@@ -17,10 +17,9 @@ import { Camera, CameraOptions } from "@ionic-native/camera";
 })
 export class ProfilPage {
 
-  carsPage = CarsPage;
   user = {} as User;
+  profilForm: FormGroup;
   isInitProfile: boolean = false;
-  isChanged: boolean = false;
 
   private options: CameraOptions = {
     quality: 50,
@@ -35,13 +34,14 @@ export class ProfilPage {
   };
 
   constructor(private auth: AuthService, private camera: Camera, private firestore: FirestoreService,
-              public navCtrl: NavController, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+              public navCtrl: NavController, public navParams: NavParams, public actionSheetCtrl: ActionSheetController , private formBuilder: FormBuilder) {
+
     if (this.navParams.get('isInitProfile')) {
       this.isInitProfile = true;
-      this.isChanged = true;
       this.loadProfile();
     } else {
       this.user = TabsPage.user;
+      this.configValidator(this.user.username, this.user.firstname, this.user.lastname);
     }
   }
 
@@ -55,7 +55,7 @@ export class ProfilPage {
 
   private loadProfile() {
     this.user.email = this.auth.email;
-    this.user.username = this.auth.displayName;
+    this.configValidator(this.auth.displayName, "", "");
     if ( this.auth.photoURL != null ) {
       this.user.photoUrl = this.auth.photoURL;
     } else {
@@ -63,11 +63,22 @@ export class ProfilPage {
     }
   }
 
+  private configValidator(username: string, firstname: string, lastname: string) {
+    this.profilForm = this.formBuilder.group({
+      username: [username, Validators.compose([Validators.required])],
+      firstname: [firstname, Validators.compose([Validators.required])],
+      lastname: [lastname, Validators.compose([Validators.required])]
+    });
+  }
+
   saveProfile() : void {
+    this.user.username = this.profilForm.value.username;
+    this.user.firstname = this.profilForm.value.firstname;
+    this.user.lastname = this.profilForm.value.lastname;
+
     if ( this.isInitProfile ) {
       this.firestore.setDocument(USER_PATH, this.auth.uid, this.user)
         .then(() => {
-          this.isChanged = false;
           this.isInitProfile = false;
           this.navCtrl.setRoot(TabsPage)
         })
