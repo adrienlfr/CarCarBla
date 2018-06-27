@@ -17,24 +17,33 @@
 <ion-content padding>
 
   <form [formGroup]="loginForm">
-    <ion-item>
+    <ion-item [ngClass]="{'error-border':!loginForm.controls.email.valid && loginForm.controls.email.touched}">
       <ion-label floating>Adresse email</ion-label>
       <ion-input type="email" clearInput formControlName="email"></ion-input>
     </ion-item>
-    <ion-item *ngIf="!loginForm.controls.email.valid">
-      <p>Please enter a valid name.</p>
+    <ion-item class="msgErreur" *ngIf="loginForm.controls.email.hasError('required') && loginForm.controls.email.touched">
+      L'email doit être renseigné.
+    </ion-item>
+    <ion-item class="msgErreur" *ngIf="loginForm.controls.email.hasError('pattern') && loginForm.controls.email.touched">
+      Le champ renseigné ne correspond pas à une adresse email.
     </ion-item>
 
-    <ion-item>
+    <ion-item [ngClass]="{'error-border':!loginForm.controls.password.valid && loginForm.controls.password.touched}">
       <ion-label floating>Mot de passe</ion-label>
       <ion-input type="password" clearInput formControlName="password"></ion-input>
+    </ion-item>
+    <ion-item class="msgErreur" *ngIf="loginForm.controls.password.hasError('required') && loginForm.controls.password.touched">
+      Le mot de passe doit être renseigné.
+    </ion-item>
+    <ion-item class="msgErreur" *ngIf="loginForm.controls.password.hasError('minlength') && loginForm.controls.password.touched">
+      Le mot de passe doit contenir au moins 6 caractères.
     </ion-item>
   </form>
 
 
   <div padding-horizontal margin-top>
 
-    <button ion-button block (click)="login(user)" >Log in</button>
+    <button ion-button block (click)="login()" [disabled]="!loginForm.valid" >Connexion</button>
 
     <ion-list>
 

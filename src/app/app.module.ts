@@ -23,6 +23,7 @@ import {JourneyPage} from "../pages/journey/journey";
 import { Camera } from "@ionic-native/camera";
 import {AngularFirestoreModule} from "angularfire2/firestore";
 import {DetailJourneyPage} from "../pages/detail-journey/detail-journey";
+import {CarPage} from "../pages/car/car";
 
 @NgModule({
   declarations: [
@@ -35,14 +36,16 @@ import {DetailJourneyPage} from "../pages/detail-journey/detail-journey";
     RegisterPage,
     CarsPage,
     JourneyPage,
-    DetailJourneyPage
+    DetailJourneyPage,
+    CarPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -55,7 +58,8 @@ import {DetailJourneyPage} from "../pages/detail-journey/detail-journey";
     RegisterPage,
     CarsPage,
     JourneyPage,
-    DetailJourneyPage
+    DetailJourneyPage,
+    CarPage
   ],
   providers: [
     StatusBar,

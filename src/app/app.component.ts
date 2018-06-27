@@ -7,6 +7,8 @@ import {LoginPage} from "../pages/login/login";
 import {AuthService} from "../services/auth.service";
 import {TabsPage} from "../pages/tabs/tabs";
 
+declare var google: any;
+
 @Component({
   templateUrl: 'app.html'
 })

@@ -49,7 +49,10 @@ export class JourneysPage {
         ['date', '>', this.filterDate],
         ['date', '<', Timestamp.fromMillis(this.filterDate.toMillis() + 86400000)])
         .then((result) => {
-          this.journeys = result.filter(journey => journey.nbPlacesAvailable >= this.filterNbPassengers);
+          if (result != null) {
+            this.journeys = null;
+            this.journeys = result.filter(journey => journey.nbPlacesAvailable >= this.filterNbPassengers);
+          }
           loadingPopup.dismiss();
         });
     } else {

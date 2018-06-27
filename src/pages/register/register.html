@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Inscription</ion-title>
   </ion-navbar>
 
@@ -15,19 +15,33 @@
 
 <ion-content padding>
 
-  <ion-item>
-    <ion-label floating>Adresse email</ion-label>
-    <ion-input type="email" clearInput [(ngModel)]="user.email"></ion-input>
-  </ion-item>
+  <form [formGroup]="registerForm">
+    <ion-item [ngClass]="{'error-border':!registerForm.controls.email.valid && registerForm.controls.email.touched}">
+      <ion-label floating>Adresse email</ion-label>
+      <ion-input type="email" clearInput formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item class="msgErreur" *ngIf="registerForm.controls.email.hasError('required') && registerForm.controls.email.touched">
+      L'email doit être renseigné.
+    </ion-item>
+    <ion-item class="msgErreur" *ngIf="registerForm.controls.email.hasError('pattern') && registerForm.controls.email.touched">
+      Le champ renseigné ne correspond pas à une adresse email.
+    </ion-item>
 
-  <ion-item>
-    <ion-label floating>Mot de passe</ion-label>
-    <ion-input type="password" clearInput [(ngModel)]="password"></ion-input>
-  </ion-item>
+    <ion-item [ngClass]="{'error-border':!registerForm.controls.password.valid && registerForm.controls.password.touched}">
+      <ion-label floating>Mot de passe</ion-label>
+      <ion-input type="password" clearInput formControlName="password"></ion-input>
+    </ion-item>
+    <ion-item class="msgErreur" *ngIf="registerForm.controls.password.hasError('required') && registerForm.controls.password.touched">
+      Le mot de passe doit être renseigné.
+    </ion-item>
+    <ion-item class="msgErreur" *ngIf="registerForm.controls.password.hasError('minlength') && registerForm.controls.password.touched">
+      Le mot de passe doit contenir au moins 6 caractères.
+    </ion-item>
+  </form>
 
   <div padding-horizontal margin-top>
 
-    <button ion-button full (click)="register(user, password)">Inscription</button>
+    <button ion-button full (click)="register()" [disabled]="!registerForm.valid" >Inscription</button>
 
     <ion-list>
 

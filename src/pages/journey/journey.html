@@ -11,7 +11,7 @@
     <ion-title *ngIf="isSearch">Rechercher</ion-title>
 
     <ion-buttons end>
-      <button ion-button (click)="searchOrAddJourney()">
+      <button ion-button (click)="searchOrAddJourney()" [disabled]="!journeyForm.valid">
         Valider
       </button>
     </ion-buttons>
@@ -23,52 +23,62 @@
 <ion-content>
 
   <ion-grid padding-right>
-
-    <ion-row>
-        <ion-item>
+    <form [formGroup]="journeyForm">
+      <ion-row>
+        <ion-item [ngClass]="{'error-border':!journeyForm.controls.departure.valid && journeyForm.controls.departure.touched}">
           <ion-label color="primary">Départ</ion-label>
-          <ion-input type="text" placeholder="Saisir la ville de départ" [(ngModel)]="journey.departure"></ion-input>
+          <ion-input id="departure" #departureInput formControlName="departure" type="text" placeholder="Saisir la ville de départ"></ion-input>
         </ion-item>
-    </ion-row>
+        <ion-item class="msgErreur" *ngIf="journeyForm.controls.departure.hasError('required') && journeyForm.controls.departure.touched">
+          La ville de départ doit être renseigné.
+        </ion-item>
+      </ion-row>
 
-    <ion-row>
-      <ion-item>
-        <ion-label color="primary">Arriver</ion-label>
-        <ion-input type="text" placeholder="Saisir la ville d'arriver" [(ngModel)]="journey.arrival"></ion-input>
-      </ion-item>
-    </ion-row>
+      <ion-row>
+        <ion-item [ngClass]="{'error-border':!journeyForm.controls.arrival.valid && journeyForm.controls.arrival.touched}">
+          <ion-label color="primary">Arriver</ion-label>
+          <ion-input id="arrival" #arrivalInput type="text" placeholder="Saisir la ville d'arriver" formControlName="arrival"></ion-input>
+        </ion-item>
+        <ion-item class="msgErreur" *ngIf="journeyForm.controls.arrival.hasError('required') && journeyForm.controls.arrival.touched">
+          La ville d'arriver doit être renseigné.
+        </ion-item>
+      </ion-row>
 
-    <ion-row>
-      <ion-item>
-        <ion-label color="primary">Date</ion-label>
-        <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="date"></ion-datetime>
-      </ion-item>
-    </ion-row>
+      <ion-row *ngIf="!isSearch">
+        <ion-item [ngClass]="{'error-border':!journeyForm.controls.price.valid && journeyForm.controls.price.touched}">
+          <ion-label color="primary">Prix</ion-label>
+          <ion-input type="number" min="0" placeholder="Prix du trajet" text-right formControlName="price"></ion-input>
+          <ion-icon name="logo-euro" item-right></ion-icon>
+        </ion-item>
+        <ion-item class="msgErreur" *ngIf="journeyForm.controls.price.hasError('required') && journeyForm.controls.price.touched">
+          La montant du trajet doit être renseigné.
+        </ion-item>
+      </ion-row>
+    </form>
 
-    <ion-row>
-      <ion-item>
-        <ion-label color="primary">Heure</ion-label>
-        <ion-datetime displayFormat="HH:mm" [(ngModel)]="date"></ion-datetime>
-      </ion-item>
-    </ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-label color="primary">Date</ion-label>
+          <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="date"></ion-datetime>
+        </ion-item>
+      </ion-row>
 
-    <ion-row *ngIf="!isSearch">
-      <ion-item>
-        <ion-label color="primary">Prix</ion-label>
-        <ion-input type="number" min="0" placeholder="Prix du trajet" text-right [(ngModel)]="journey.price"></ion-input>
-        <ion-icon name="logo-euro" item-right></ion-icon>
-      </ion-item>
-    </ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-label color="primary">Heure</ion-label>
+          <ion-datetime displayFormat="HH:mm" [(ngModel)]="date"></ion-datetime>
+        </ion-item>
+      </ion-row>
 
-    <ion-row>
-      <ion-item>
-        <ion-label color="primary" full>
-          Nombre de place :
-          <ion-badge item-end color="primary"> {{journey.passengerNb}} </ion-badge>
-        </ion-label>
-        <ion-range min="1" max="4" step="1" snaps="true" color="primary" [(ngModel)]="journey.passengerNb"></ion-range>
-      </ion-item>
-    </ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-label color="primary" full>
+            Nombre de place :
+            <ion-badge item-end color="primary"> {{journey.passengerNb}} </ion-badge>
+          </ion-label>
+          <ion-range min="1" max="4" step="1" snaps="true" color="primary" [(ngModel)]="journey.passengerNb"></ion-range>
+        </ion-item>
+      </ion-row>
 
 
 

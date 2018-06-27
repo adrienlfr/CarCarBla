@@ -6,12 +6,23 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>Mes voitures</ion-title>
+    <ion-title>Mes véhicules</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content >
+
+  <ion-list *ngFor="let item of cars">
+
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/imgs/denis.jpg">
+      </ion-avatar>
+      {{item.model}}
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>

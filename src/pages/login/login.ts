@@ -7,7 +7,7 @@ import {RegisterPage} from "../register/register";
 import {TabsPage} from "../tabs/tabs";
 
 import { ConnectionUser } from "../../models/connectionUser";
-import {FormBuilder, FormGroup, Validator, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 /**
  * Generated class for the LoginPage page.
@@ -28,12 +28,14 @@ export class LoginPage {
   constructor(private auth: AuthService, public navCtrl: NavController, private platform: Platform,
               private loadingCtrl: LoadingController, private formBuilder: FormBuilder) {
     this.loginForm = formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.pattern('^[\w0-9]+@[\w0-9]+\.[\w]+$/gm')])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
     })
   }
 
-  async login(user: ConnectionUser) {
+  async login() {
+    this.user.email = this.loginForm.value.email;
+    this.user.password = this.loginForm.value.password;
     let loadingPopup = this.loadingCtrl.create({
       spinner: 'crescent',
       content: ''
@@ -41,7 +43,7 @@ export class LoginPage {
     loadingPopup.present();
 
     try {
-      this.auth.signInWithEmail(user).then(
+      this.auth.signInWithEmail(this.user).then(
         () => {
           loadingPopup.dismiss();
           this.navCtrl.setRoot(TabsPage)})
